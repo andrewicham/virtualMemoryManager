@@ -1,37 +1,52 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <pthread.h>
+#include <string.h>
+#include <unistd.h>
 
-/* This program will translate logical to physical addresses fora virtual address s
-space of size 2^16 Bytes. This program reads from a file containing logical addresses
-and using a TLB and a page table, will translate each logical address to its corresponding
-physical address. it will output the value of the byte stored at the translated physical
-address. This project will SIMULATE the steps involved in translating logical to physical
-addresses
+#define PAGE_TABLE_SIZE 256
+#define PAGE_SIZE 256
+#define TOTAL_FRAMES 256
+#define FRAME_SIZE 256
+#define TLB_SIZE 16
+#define PAGE_NUMBER_MASK 0xffff
+#define OFFSET_MASK 0xff
 
-SPECIFICS:
+int pageTable[TOTAL_FRAMES][FRAME_SIZE];
 
-read file containing 32 bit integer numbers that represent logical addresses. 
-You must mask the rightmost 16 bits of each logical address.
-
-These leftmost 16 bits are are divided into an 8 bit page number and 8 bit page offset
-
-OTHER SPECIFICS:
-
-2^8 entries in the page table
-page size of 2^8 bytes
-16 entries in the TLB
-Frame size of 2^8 Bytes
-256 frames
-physical memory of 2^16 bytes (2^8 frames * 2^8-byte frame size)
+void getPage(int virtualAddress);
 
 
-First step: Address Translation
 
-first, translate logical to physical address using a TLB and page table. 
-The page number is extracted from the logical address and the TLB is consulted.
- */
+
+void getPage(int virtualAddress){
+    int pageNumber = ((virtualAddress & PAGE_NUMBER_MASK) >> 8); //this will shift right 8 bits, after performing and on both
+    int offset = (virtualAddress & OFFSET_MASK); //performs and on virtualAddress to determine offset
+
+    printf("page number: %d\noffset:%d\n", pageNumber, offset);
+}
+
+
 
 int main(int argc, char const *argv[]){
+    //as per the instructions, use bitmask and bit shifting to extract address and offset on this array
+    int nums[7] = {1, 256, 32768, 32769, 128, 65534, 33153}; 
+    int i;
+
+    for(i = 0; i < 7; i++){
+        getPage(nums[i]);
+    }
+    
+
+    FILE *addresses; //creates a file pointer to addresses file
+    FILE *backingStore;
+
+    addresses = fopen(argv[1], "r"); //reads in file as command line argument 
+    backingStore = fopen("BACKING_STORE.bin", "rb"); //opens the backing_store.bin file
+
+
+
+    
+
+
     return 0;
 }

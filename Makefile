@@ -1,10 +1,10 @@
 all: virtualMemoryManager
 
 virtualMemoryManager: virtualMemoryManager.c
-	gcc virtualMemoryManager.c -lpthread -o virtualMemoryManager
+	gcc virtualMemoryManager.c -o virtualMemoryManager
 
 clean:
 	rm -rf virtualMemoryManager
 
 run: 
-	./virtualMemoryManager
+	./virtualMemoryManager addresses.txt
