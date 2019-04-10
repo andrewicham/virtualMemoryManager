@@ -20,12 +20,6 @@
 #define GET_OFFSET(addr) ((addr) & (OFFSET_MASK))
 #define GET_PHYSICAL_ADDRESS(frame, offset) ((frame << OFFSET_LENGTH) | (offset))
 
-FILE *addresses; //creates a file pointer to addresses file and backingStore file
-FILE *backingStore;
-int numberOfPageFaults = 0;
-int translatedAddresses = 0;
-int tlbInsertions = 0;
-int tlbIndex = 0;
 
 /* first we need frame and page data structures */
 struct Page{
@@ -48,6 +42,16 @@ struct Page pageTable[PAGE_TABLE_SIZE];
 struct Frame physicalMemory[TOTAL_FRAMES];
 char virtualAddress[VIRTUAL_ADDRESS_SIZE];
 struct TLB tlb;
+
+FILE *addresses; //creates a file pointer to addresses file and backingStore file
+FILE *backingStore;
+FILE *output;
+int numberOfPageFaults = 0;
+int translatedAddresses = 0;
+int tlbInsertions = 0;
+int tlbIndex = 0;
+signed char value;
+
 
 /* creating a user defined data type to add more meaningful return values to functions */
 typedef
@@ -91,13 +95,14 @@ tlb_lookup(uint32_t pageNumber, uint32_t* frameNumber){
 }
 
 void insert_into_tlb(pageNumber, frameNumber){
-    
+    if(tlbInsertions < TLB_SIZE - 1){
+
+    }
 }
-
-
 int main(int argc, char const *argv[]){
     addresses = fopen(argv[1], "r"); //reads in file as command line argument 
     backingStore = fopen("BACKING_STORE.bin", "rb"); //opens the backing_store.bin file
+    output = fopen("output.txt", "w"); //output has write identifier
     int logicalAddress;
     uint32_t frameNumber = 0;
     
@@ -164,16 +169,19 @@ int main(int argc, char const *argv[]){
                 pageTable[pageNumber].frameNumber = frameNumber;
                 pageTable[pageNumber].valid = 1;
                 insert_into_tlb(pageNumber, frameNumber);
+                
                 //insert the page into the tlb
             }
         }
+        
         uint32_t physical_address = GET_PHYSICAL_ADDRESS(frameNumber, offset);
-        //printf("virtual address: %u physical address: %u\n", logicalAddress, physical_address);
+        value = physicalMemory[frameNumber].bytes[offset]; //gets the signed byte value stored at the physical address
+        //printf("virtual address: %u physical address: %u value: %d\n", logicalAddress, physical_address, value);
+        fprintf(output, "Virtual address: %u Physical address: %u Value: %d\n", logicalAddress, physical_address, value);
     }
     
-    int j = 15 % 16;
-    printf("J: %d", j);
     fclose(addresses);
     fclose(backingStore);
+    fclose(output);
     return 0;
 }
