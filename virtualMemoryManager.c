@@ -14,112 +14,76 @@
 #define VIRTUAL_ADDRESS_SIZE 10
 #define OFFSET_LENGTH 8
 #define CHUNK 256
+
 //using macros for simplicity instead of functions
 #define GET_PAGE_NUMBER(addr) (((addr) & (PAGE_NUMBER_MASK)) >> (OFFSET_LENGTH))
 #define GET_OFFSET(addr) ((addr) & (OFFSET_MASK))
-#define GET_PHYSICAL_ADDRESS(frame, offset) (((frame) << (OFFSET_LENGTH) | (offset)))
+#define GET_PHYSICAL_ADDRESS(frame, offset) ((frame << OFFSET_LENGTH) | (offset))
 
-/* Steps:
-First, page number extracted from Logical address (done)
-Next, TLB is consulted
-If there is a TLB hit, the frame number is obtained from the TLB
-If there is a TLB miss, the page table must be consulted
-    If there is a TLB miss:
-        Either the frame number is obtained from the Page table
-        or a page fault occurs
-        
-        When a page fault occurs:
-            Read in a 256 byte page from the backing store file 
-            Store this page in an available page frame in physical memory
-            Once this frame is stored, Update the TLB and page table
-            Any subsequent accesses to the page number that caused a page fault will be resolved by either the TLB or page table
+FILE *addresses; //creates a file pointer to addresses file and backingStore file
+FILE *backingStore;
+int numberOfPageFaults = 0;
 
-        
- */
 
-/* Constructing some data structures to be used. */
+/* first we need frame and page data structures */
 struct Page{
-    uint8_t valid;
     uint32_t pageNumber;
     uint32_t frameNumber;
+    uint8_t valid; 
 };
 
-struct TLB{
-    struct Page pages[TLB_SIZE];
+struct Frame{
+    uint8_t free; //if the memory is free, will be 1. otherwise 0.
+    signed char bytes[FRAME_SIZE];
 };
 
-struct Frame {
-    uint8_t valid;
-    char bytes[FRAME_SIZE];
-};
-
-struct Frame physicalMemory[TOTAL_FRAMES];
-struct Page pageTable[PAGE_TABLE_SIZE];
-char virtualAddress[VIRTUAL_ADDRESS_SIZE];
-struct TLB tlb;
-FILE *addresses; //creates a file pointer to addresses file
-FILE *backingStore;
-signed char buffer[CHUNK];
-
-/* Creating a user defined data type; similar to creating a class or an object in another language */
-typedef
-enum tlb_lookup_status {
-    TLB_MISS,
-    TLB_HIT,
-} tlb_lookup_status;
-
+/*  */
 typedef
 enum page_lookup_status {
     PAGE_FAULT,
     PAGE_HIT,
 } page_lookup_status;
 
-/* This function will determine if the page returns a page fault */
+
+
+struct Page pageTable[PAGE_TABLE_SIZE];
+struct Frame physicalMemory[TOTAL_FRAMES];
+char virtualAddress[VIRTUAL_ADDRESS_SIZE];
+
+
 page_lookup_status
 page_lookup(struct Page **p, uint32_t pageNumber){
+    //point p to null if there is a page fault
+    *p = NULL;
     if (pageNumber < 0 || pageNumber > 255) {
-        return NULL;
-    }
-    if (!pageTable[pageNumber].valid) {
-        // PAGE FAULT
-        // in this case, need to load from the file
-        // into physical memory at next available frame
-        // and update the frame number for that page
         return PAGE_FAULT;
-    } else {
-        // PAGE HIT
-        // simply return the address of the page
+    }
+    //if there is a valid pageTable entry, then get its address
+    if (pageTable[pageNumber].valid == 1) {
         *p = &pageTable[pageNumber];
         return PAGE_HIT;
     }
+    
     return PAGE_FAULT;
-}
-
-tlb_lookup_status
-tlb_lookup(uint32_t pageNumber, uint32_t* frameNumber){
-    int i;
-    for(i = 0; i < TLB_SIZE; i++){
-        if(tlb.pages[i].pageNumber == pageNumber){
-            //if this executes, this means that there is a TLB hit
-            *frameNumber = tlb.pages[i].frameNumber;
-            return TLB_HIT;
-        }
-    }
-    //otherwise, return a TLB miss
-    return TLB_MISS;
 }
 
 
 int main(int argc, char const *argv[]){
-    int i;
-    int logicalAddress;
-    //initializing the physical memory so that valid field of every element is false
-    for(i = 0; i < TOTAL_FRAMES; i++){
-        physicalMemory[i].valid = 0;
-    }
     addresses = fopen(argv[1], "r"); //reads in file as command line argument 
     backingStore = fopen("BACKING_STORE.bin", "rb"); //opens the backing_store.bin file
+    int logicalAddress;
+    uint32_t frameNumber = 0;
     
+    //initializing the page table so that valid field of every element is false
+    for(int i = 0; i < PAGE_TABLE_SIZE; i++){
+        pageTable[i].valid = 0;
+    }
+
+    //physical memory is free at the beginning
+    for(int i = 0; i < TOTAL_FRAMES; i++){
+        physicalMemory[i].free = 1;
+    }
+
     if(addresses == NULL){
         fprintf(stderr, "Error opening addresses.txt %s\n", argv[1]);
         return -1;
@@ -131,46 +95,52 @@ int main(int argc, char const *argv[]){
     
     while(fgets(virtualAddress, VIRTUAL_ADDRESS_SIZE, addresses) != NULL){
         logicalAddress = atoi(virtualAddress);
-        uint32_t pageNumber = GET_PAGE_NUMBER(logicalAddress);
-        uint32_t offset = GET_OFFSET(logicalAddress);
-        //printf("PageNumber: %u Offset: %u\n", pageNumber, offset);
-        uint32_t frameNumber = 0;
-        if(TLB_HIT == tlb_lookup(pageNumber, &frameNumber)){
-            //TLB hit case
-            printf("------TLB HIT-------\n");
-            printf("Frame Number: %u\n", frameNumber);
-            
-        }else{
-            //TLB miss case
-            printf("-----TLB MISS-----\n");
-            struct Page *lookup_results;
-            if(PAGE_HIT == page_lookup(&lookup_results, pageNumber)){
-                frameNumber = lookup_results->frameNumber;
-            }else{//Page fault 
-                if(fseek(backingStore, pageNumber * PAGE_SIZE, SEEK_SET) != 0){
-                    fprintf(stderr, "error reading backing store\n");
-                }
-                //first read in 256 byte data from backing store
-                if(fread(buffer, sizeof(signed char), CHUNK, backingStore) == 0){
-                    fprintf(stderr, "Backing store read error!\n");
-                }
-                int i;
-                for(i = 0; i < CHUNK; i++){
-                    physicalMemory[frameNumber].bytes[i] = buffer[i];
-                }
-                //now, update the Page Table
-                //now, update the TLB
-            }
+        
+        uint32_t pageNumber = GET_PAGE_NUMBER(logicalAddress); //translating page number from logical address
+        uint32_t offset = GET_OFFSET(logicalAddress); //translating offset from logical address
+        frameNumber = 0;
+        struct Page *lookup_results;
+        
+        if(PAGE_HIT == page_lookup(&lookup_results, pageNumber)){
+            //printf("\n\nPAGE HIT!");
+            frameNumber = lookup_results->frameNumber;
         }
-
-
+        else{
+            /*
+             * Look for available frame number
+             */
+            for (int i = 0; i < TOTAL_FRAMES; i++) {
+                if (physicalMemory[i].free) {
+                    // found a free frame, use it
+                    frameNumber = i;
+                    physicalMemory[i].free = 0;
+                    break;
+                }
+            }
+            
+            //now, read in the page from the disk (BACKING_STORE.bin)
+            if(fseek(backingStore, pageNumber * CHUNK, SEEK_SET) != 0){
+                fprintf(stderr, "Error! cannot seek through backing store!\n");
+                // continue with next element, there is nothing to do for current input
+                continue;
+            }
+            //read the proper page directly into physical memory
+            if(fread(physicalMemory[frameNumber].bytes, sizeof(signed char), CHUNK, backingStore) == 0){
+                fprintf(stderr, "Error! cannot read backing store!\n");
+                // continue with next element, there is nothing to do for current input
+                continue;
+            }
+            
+            pageTable[pageNumber].pageNumber = pageNumber;
+            pageTable[pageNumber].frameNumber = frameNumber;
+            pageTable[pageNumber].valid = 1;//set the page to valid, as it is in the page table
+        }
         uint32_t physical_address = GET_PHYSICAL_ADDRESS(frameNumber, offset);
-
+        printf("virtual address: %u physical address: %u\n", logicalAddress, physical_address);
 
     }
-
+    
     fclose(addresses);
     fclose(backingStore);
-
     return 0;
 }
