@@ -20,7 +20,7 @@
 #define GET_OFFSET(addr) ((addr) & (OFFSET_MASK))
 #define GET_PHYSICAL_ADDRESS(frame, offset) ((frame << OFFSET_LENGTH) | (offset))
 
-
+int i;
 /* first we need frame and page data structures */
 struct Page{
     uint32_t pageNumber;
@@ -84,7 +84,7 @@ page_lookup(struct Page **p, uint32_t pageNumber){
 
 tlb_lookup_status
 tlb_lookup(uint32_t pageNumber, uint32_t* frameNumber){
-    for (int i = 0; i < TLB_SIZE; i++) {
+    for (i = 0; i < TLB_SIZE; i++) {
         if (tlb.pages[i].pageNumber == pageNumber) {
             // HIT
             *frameNumber = tlb.pages[i].frameNumber;
@@ -95,9 +95,46 @@ tlb_lookup(uint32_t pageNumber, uint32_t* frameNumber){
 }
 
 void insert_into_tlb(pageNumber, frameNumber){
-    if(tlbInsertions < TLB_SIZE - 1){
-
+    for(i = 0; i < tlbInsertions; i++){
+	if(tlb.pages[i].pageNumber == pageNumber){  //if already in array, break
+	    break;
+	}
     }
+    if(i != tlbInsertions){
+	for(i = i; i < tlbInsertions - 1; i++){
+	    tlb.pages[i].pageNumber = tlb.pages[i+1].pageNumber;
+	    tlb.pages[i].frameNumber = tlb.pages[i+1].frameNumber;
+	}
+	if(tlbInsertions < TLB_SIZE){  //if tlb still has room
+	    tlb.pages[tlbInsertions].pageNumber = pageNumber; //insert page
+	    tlb.pages[tlbInsertions].frameNumber = frameNumber; //insert frame
+	}
+	else{ //if tlb is out of room
+	    tlb.pages[tlbInsertions-1].pageNumber = pageNumber;
+	    tlb.pages[tlbInsertions-1].frameNumber = frameNumber;
+	}
+        if(tlbInsertions < TLB_SIZE){
+	    tlbInsertions++;
+        }
+    }
+    else{
+	if(tlbInsertions < TLB_SIZE){
+	    tlb.pages[tlbInsertions].pageNumber = pageNumber;
+	    tlb.pages[tlbInsertions].frameNumber = frameNumber;
+	}
+	else{
+	    for(i = 0; i < TLB_SIZE - 1; i++){
+		tlb.pages[i].pageNumber = tlb.pages[i+1].pageNumber;
+		tlb.pages[i].frameNumber = tlb.pages[i+1].frameNumber;
+	    }
+	    tlb.pages[tlbInsertions-1].pageNumber = pageNumber;
+	    tlb.pages[tlbInsertions-1].frameNumber = frameNumber;
+	}
+	if(tlbInsertions < TLB_SIZE){
+	    tlbInsertions++;
+        }
+    }
+
 }
 int main(int argc, char const *argv[]){
     addresses = fopen(argv[1], "r"); //reads in file as command line argument 
@@ -107,12 +144,12 @@ int main(int argc, char const *argv[]){
     uint32_t frameNumber = 0;
     
     //initializing the page table so that valid field of every element is false
-    for(int i = 0; i < PAGE_TABLE_SIZE; i++){
+    for(i = 0; i < PAGE_TABLE_SIZE; i++){
         pageTable[i].valid = 0;
     }
 
     //physical memory is free at the beginning
-    for(int i = 0; i < TOTAL_FRAMES; i++){
+    for(i = 0; i < TOTAL_FRAMES; i++){
         physicalMemory[i].free = 1;
     }
     //error check conditions for file opening
@@ -143,7 +180,7 @@ int main(int argc, char const *argv[]){
                 insert_into_tlb(pageNumber, frameNumber);
             }
             else{ //if its not in the page table, look for available frame number
-                for (int i = 0; i < TOTAL_FRAMES; i++) {
+                for (i = 0; i < TOTAL_FRAMES; i++) {
                     if (physicalMemory[i].free) {
                         // found a free frame, use it
                         frameNumber = i;
