@@ -513,7 +513,7 @@ Virtual address: 4116 Physical address: 50708 Value: 0
 Virtual address: 65222 Physical address: 48582 Value: 63
 Virtual address: 28083 Physical address: 3507 Value: 108
 Virtual address: 60660 Physical address: 7412 Value: 0
-Virtual address: 39 Physical address: 39 Value: -119
+Virtual address: 39 Physical address: 58407 Value: 9
 Virtual address: 328 Physical address: 57160 Value: 0
 Virtual address: 47868 Physical address: 56572 Value: 0
 Virtual address: 13009 Physical address: 30417 Value: 0
@@ -523,7 +523,7 @@ Virtual address: 11171 Physical address: 40099 Value: -24
 Virtual address: 8079 Physical address: 33935 Value: -29
 Virtual address: 52879 Physical address: 47759 Value: -93
 Virtual address: 5123 Physical address: 15107 Value: 0
-Virtual address: 4356 Physical address: 58372 Value: 0
+Virtual address: 4356 Physical address: 58628 Value: 0
 Virtual address: 45745 Physical address: 7857 Value: 0
 Virtual address: 32952 Physical address: 4280 Value: 0
 Virtual address: 4657 Physical address: 27697 Value: 0
@@ -540,7 +540,7 @@ Virtual address: 55297 Physical address: 58113 Value: 0
 Virtual address: 52954 Physical address: 47834 Value: 51
 Virtual address: 39720 Physical address: 38184 Value: 0
 Virtual address: 18455 Physical address: 5399 Value: 5
-Virtual address: 30349 Physical address: 58765 Value: 0
+Virtual address: 30349 Physical address: 59021 Value: 0
 Virtual address: 63270 Physical address: 16934 Value: 61
 Virtual address: 27156 Physical address: 28692 Value: 0
 Virtual address: 20614 Physical address: 56966 Value: 20
@@ -551,12 +551,12 @@ Virtual address: 50584 Physical address: 18584 Value: 0
 Virtual address: 51936 Physical address: 27360 Value: 0
 Virtual address: 34705 Physical address: 18065 Value: 0
 Virtual address: 13653 Physical address: 53077 Value: 0
-Virtual address: 50077 Physical address: 59037 Value: 0
+Virtual address: 50077 Physical address: 59293 Value: 0
 Virtual address: 54518 Physical address: 19446 Value: 53
 Virtual address: 41482 Physical address: 41738 Value: 40
 Virtual address: 4169 Physical address: 50761 Value: 0
 Virtual address: 36118 Physical address: 54550 Value: 35
-Virtual address: 9584 Physical address: 59248 Value: 0
+Virtual address: 9584 Physical address: 59504 Value: 0
 Virtual address: 18490 Physical address: 5434 Value: 18
 Virtual address: 55420 Physical address: 58236 Value: 0
 Virtual address: 5708 Physical address: 52044 Value: 0
@@ -578,7 +578,7 @@ Virtual address: 45366 Physical address: 45878 Value: 44
 Virtual address: 50437 Physical address: 18437 Value: 0
 Virtual address: 36675 Physical address: 35651 Value: -48
 Virtual address: 55382 Physical address: 58198 Value: 54
-Virtual address: 11846 Physical address: 59462 Value: 11
+Virtual address: 11846 Physical address: 59718 Value: 11
 Virtual address: 49127 Physical address: 50663 Value: -7
 Virtual address: 19900 Physical address: 36540 Value: 0
 Virtual address: 20554 Physical address: 56906 Value: 20
@@ -606,11 +606,11 @@ Virtual address: 41683 Physical address: 41939 Value: -76
 Virtual address: 20981 Physical address: 39157 Value: 0
 Virtual address: 33881 Physical address: 42073 Value: 0
 Virtual address: 41785 Physical address: 38713 Value: 0
-Virtual address: 4580 Physical address: 58596 Value: 0
+Virtual address: 4580 Physical address: 58852 Value: 0
 Virtual address: 41389 Physical address: 25005 Value: 0
 Virtual address: 28572 Physical address: 28060 Value: 0
 Virtual address: 782 Physical address: 7950 Value: 0
-Virtual address: 30273 Physical address: 58689 Value: 0
+Virtual address: 30273 Physical address: 58945 Value: 0
 Virtual address: 62267 Physical address: 23867 Value: -50
 Virtual address: 17922 Physical address: 18690 Value: 17
 Virtual address: 63238 Physical address: 16902 Value: 61
@@ -620,7 +620,7 @@ Virtual address: 44395 Physical address: 44907 Value: 90
 Virtual address: 39120 Physical address: 4048 Value: 0
 Virtual address: 21706 Physical address: 52426 Value: 21
 Virtual address: 7144 Physical address: 26600 Value: 0
-Virtual address: 30244 Physical address: 58660 Value: 0
+Virtual address: 30244 Physical address: 58916 Value: 0
 Virtual address: 3725 Physical address: 10125 Value: 0
 Virtual address: 54632 Physical address: 48744 Value: 0
 Virtual address: 30574 Physical address: 16238 Value: 29
@@ -658,15 +658,15 @@ Virtual address: 51442 Physical address: 32754 Value: 50
 Virtual address: 34845 Physical address: 26653 Value: 0
 Virtual address: 63667 Physical address: 28339 Value: 44
 Virtual address: 39370 Physical address: 55754 Value: 38
-Virtual address: 55671 Physical address: 59767 Value: 93
+Virtual address: 55671 Physical address: 60023 Value: 93
 Virtual address: 64496 Physical address: 5104 Value: 0
 Virtual address: 7767 Physical address: 57943 Value: -107
 Virtual address: 6283 Physical address: 7563 Value: 34
 Virtual address: 55884 Physical address: 34636 Value: 0
 Virtual address: 61103 Physical address: 6063 Value: -85
-Virtual address: 10184 Physical address: 60104 Value: 0
+Virtual address: 10184 Physical address: 60360 Value: 0
 Virtual address: 39543 Physical address: 43383 Value: -99
-Virtual address: 9555 Physical address: 59219 Value: 84
+Virtual address: 9555 Physical address: 59475 Value: 84
 Virtual address: 13963 Physical address: 31371 Value: -94
 Virtual address: 58975 Physical address: 14943 Value: -105
 Virtual address: 19537 Physical address: 22609 Value: 0
@@ -675,12 +675,12 @@ Virtual address: 41421 Physical address: 25037 Value: 0
 Virtual address: 45502 Physical address: 46014 Value: 44
 Virtual address: 29328 Physical address: 37008 Value: 0
 Virtual address: 8149 Physical address: 34005 Value: 0
-Virtual address: 25450 Physical address: 60266 Value: 24
+Virtual address: 25450 Physical address: 60522 Value: 24
 Virtual address: 58944 Physical address: 14912 Value: 0
 Virtual address: 50666 Physical address: 18666 Value: 49
 Virtual address: 23084 Physical address: 35884 Value: 0
 Virtual address: 36468 Physical address: 14452 Value: 0
-Virtual address: 33645 Physical address: 60525 Value: 0
+Virtual address: 33645 Physical address: 60781 Value: 0
 Virtual address: 25002 Physical address: 52650 Value: 24
 Virtual address: 53715 Physical address: 979 Value: 116
 Virtual address: 60173 Physical address: 57613 Value: 0
@@ -724,7 +724,7 @@ Virtual address: 39993 Physical address: 1081 Value: 0
 Virtual address: 56004 Physical address: 34756 Value: 0
 Virtual address: 59002 Physical address: 14970 Value: 57
 Virtual address: 33982 Physical address: 42174 Value: 33
-Virtual address: 25498 Physical address: 60314 Value: 24
+Virtual address: 25498 Physical address: 60570 Value: 24
 Virtual address: 57047 Physical address: 37591 Value: -75
 Virtual address: 1401 Physical address: 51577 Value: 0
 Virtual address: 15130 Physical address: 32282 Value: 14
@@ -732,7 +732,7 @@ Virtual address: 42960 Physical address: 19664 Value: 0
 Virtual address: 61827 Physical address: 22403 Value: 96
 Virtual address: 32442 Physical address: 7098 Value: 31
 Virtual address: 64304 Physical address: 4912 Value: 0
-Virtual address: 30273 Physical address: 58689 Value: 0
+Virtual address: 30273 Physical address: 58945 Value: 0
 Virtual address: 38082 Physical address: 37314 Value: 37
 Virtual address: 22404 Physical address: 11396 Value: 0
 Virtual address: 3808 Physical address: 10208 Value: 0
@@ -740,7 +740,7 @@ Virtual address: 16883 Physical address: 48115 Value: 124
 Virtual address: 23111 Physical address: 35911 Value: -111
 Virtual address: 62417 Physical address: 24017 Value: 0
 Virtual address: 60364 Physical address: 57804 Value: 0
-Virtual address: 4542 Physical address: 58558 Value: 4
+Virtual address: 4542 Physical address: 58814 Value: 4
 Virtual address: 14829 Physical address: 33517 Value: 0
 Virtual address: 44964 Physical address: 13220 Value: 0
 Virtual address: 33924 Physical address: 42116 Value: 0
@@ -754,8 +754,8 @@ Virtual address: 24888 Physical address: 52536 Value: 0
 Virtual address: 49247 Physical address: 8543 Value: 23
 Virtual address: 4900 Physical address: 13604 Value: 0
 Virtual address: 22656 Physical address: 2944 Value: 0
-Virtual address: 34117 Physical address: 60741 Value: 0
-Virtual address: 55555 Physical address: 59651 Value: 64
+Virtual address: 34117 Physical address: 60997 Value: 0
+Virtual address: 55555 Physical address: 59907 Value: 64
 Virtual address: 48947 Physical address: 50483 Value: -52
 Virtual address: 59533 Physical address: 25997 Value: 0
 Virtual address: 21312 Physical address: 9024 Value: 0
@@ -780,7 +780,7 @@ Virtual address: 63485 Physical address: 17149 Value: 0
 Virtual address: 38697 Physical address: 46889 Value: 0
 Virtual address: 59188 Physical address: 10292 Value: 0
 Virtual address: 24593 Physical address: 38417 Value: 0
-Virtual address: 57641 Physical address: 60969 Value: 0
+Virtual address: 57641 Physical address: 61225 Value: 0
 Virtual address: 36524 Physical address: 14508 Value: 0
 Virtual address: 56980 Physical address: 37524 Value: 0
 Virtual address: 36810 Physical address: 35786 Value: 35
@@ -796,7 +796,7 @@ Virtual address: 60873 Physical address: 23753 Value: 0
 Virtual address: 23719 Physical address: 54951 Value: 41
 Virtual address: 24385 Physical address: 1601 Value: 0
 Virtual address: 22307 Physical address: 11299 Value: -56
-Virtual address: 17375 Physical address: 61407 Value: -9
+Virtual address: 17375 Physical address: 61663 Value: -9
 Virtual address: 15990 Physical address: 21110 Value: 15
 Virtual address: 20526 Physical address: 56878 Value: 20
 Virtual address: 25904 Physical address: 36656 Value: 0
@@ -831,7 +831,7 @@ Virtual address: 61297 Physical address: 42353 Value: 0
 Virtual address: 45633 Physical address: 7745 Value: 0
 Virtual address: 61431 Physical address: 42487 Value: -3
 Virtual address: 46032 Physical address: 51152 Value: 0
-Virtual address: 18774 Physical address: 61526 Value: 18
+Virtual address: 18774 Physical address: 61782 Value: 18
 Virtual address: 62991 Physical address: 22031 Value: -125
 Virtual address: 28059 Physical address: 3483 Value: 102
 Virtual address: 35229 Physical address: 39837 Value: 0
@@ -843,7 +843,7 @@ Virtual address: 2709 Physical address: 53909 Value: 0
 Virtual address: 47963 Physical address: 25691 Value: -42
 Virtual address: 36943 Physical address: 18255 Value: 19
 Virtual address: 54066 Physical address: 51762 Value: 52
-Virtual address: 10054 Physical address: 59974 Value: 9
+Virtual address: 10054 Physical address: 60230 Value: 9
 Virtual address: 43051 Physical address: 17451 Value: 10
 Virtual address: 11525 Physical address: 41477 Value: 0
 Virtual address: 17684 Physical address: 9748 Value: 0
@@ -861,11 +861,11 @@ Virtual address: 21018 Physical address: 37658 Value: 20
 Virtual address: 2192 Physical address: 35216 Value: 0
 Virtual address: 18384 Physical address: 2512 Value: 0
 Virtual address: 13464 Physical address: 36248 Value: 0
-Virtual address: 31018 Physical address: 61738 Value: 30
+Virtual address: 31018 Physical address: 61994 Value: 30
 Virtual address: 62958 Physical address: 28654 Value: 61
 Virtual address: 30611 Physical address: 16275 Value: -28
 Virtual address: 1913 Physical address: 33145 Value: 0
-Virtual address: 18904 Physical address: 61656 Value: 0
+Virtual address: 18904 Physical address: 61912 Value: 0
 Virtual address: 26773 Physical address: 42645 Value: 0
 Virtual address: 55491 Physical address: 58307 Value: 48
 Virtual address: 21899 Physical address: 24203 Value: 98
@@ -903,14 +903,14 @@ Virtual address: 22136 Physical address: 56696 Value: 0
 Virtual address: 22427 Physical address: 11419 Value: -26
 Virtual address: 23867 Physical address: 39483 Value: 78
 Virtual address: 59968 Physical address: 10560 Value: 0
-Virtual address: 62166 Physical address: 62166 Value: 60
+Virtual address: 62166 Physical address: 62422 Value: 60
 Virtual address: 6972 Physical address: 26428 Value: 0
 Virtual address: 63684 Physical address: 28356 Value: 0
 Virtual address: 46388 Physical address: 50228 Value: 0
 Virtual address: 41942 Physical address: 38870 Value: 40
 Virtual address: 36524 Physical address: 14508 Value: 0
 Virtual address: 9323 Physical address: 22891 Value: 26
-Virtual address: 31114 Physical address: 61834 Value: 30
+Virtual address: 31114 Physical address: 62090 Value: 30
 Virtual address: 22345 Physical address: 11337 Value: 0
 Virtual address: 46463 Physical address: 50303 Value: 95
 Virtual address: 54671 Physical address: 48783 Value: 99
@@ -926,7 +926,7 @@ Virtual address: 51961 Physical address: 27385 Value: 0
 Virtual address: 58634 Physical address: 55050 Value: 57
 Virtual address: 57990 Physical address: 3206 Value: 56
 Virtual address: 28848 Physical address: 1456 Value: 0
-Virtual address: 49920 Physical address: 58880 Value: 0
+Virtual address: 49920 Physical address: 59136 Value: 0
 Virtual address: 18351 Physical address: 2479 Value: -21
 Virtual address: 53669 Physical address: 933 Value: 0
 Virtual address: 33996 Physical address: 42188 Value: 0
@@ -965,7 +965,7 @@ Virtual address: 42008 Physical address: 46104 Value: 0
 Virtual address: 27460 Physical address: 15684 Value: 0
 Virtual address: 24999 Physical address: 52647 Value: 105
 Virtual address: 51933 Physical address: 27357 Value: 0
-Virtual address: 34070 Physical address: 60694 Value: 33
+Virtual address: 34070 Physical address: 60950 Value: 33
 Virtual address: 65155 Physical address: 48515 Value: -96
 Virtual address: 59955 Physical address: 10547 Value: -116
 Virtual address: 9277 Physical address: 22845 Value: 0
@@ -973,7 +973,7 @@ Virtual address: 20420 Physical address: 16836 Value: 0
 Virtual address: 44860 Physical address: 13116 Value: 0
 Virtual address: 50992 Physical address: 42800 Value: 0
 Virtual address: 10583 Physical address: 27479 Value: 85
-Virtual address: 57751 Physical address: 61079 Value: 101
+Virtual address: 57751 Physical address: 61335 Value: 101
 Virtual address: 23195 Physical address: 35995 Value: -90
 Virtual address: 27227 Physical address: 28763 Value: -106
 Virtual address: 42816 Physical address: 19520 Value: 0
@@ -981,7 +981,7 @@ Virtual address: 58219 Physical address: 34155 Value: -38
 Virtual address: 37606 Physical address: 21478 Value: 36
 Virtual address: 18426 Physical address: 2554 Value: 17
 Virtual address: 21238 Physical address: 37878 Value: 20
-Virtual address: 11983 Physical address: 59599 Value: -77
+Virtual address: 11983 Physical address: 59855 Value: -77
 Virtual address: 48394 Physical address: 1802 Value: 47
 Virtual address: 11036 Physical address: 39964 Value: 0
 Virtual address: 30557 Physical address: 16221 Value: 0
@@ -998,3 +998,4 @@ Virtual address: 8940 Physical address: 46572 Value: 0
 Virtual address: 9929 Physical address: 44745 Value: 0
 Virtual address: 45563 Physical address: 46075 Value: 126
 Virtual address: 12107 Physical address: 2635 Value: -46
+Page Faults: 244 TLB Hits: 54 Page Fault Rate: 0.244000 TLB Hit Rate: 0.054000

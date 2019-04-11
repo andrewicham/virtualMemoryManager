@@ -37,7 +37,7 @@ struct Frame{
 struct TLB {
     struct Page pages[TLB_SIZE];
 };
-
+//creates several data structures to be used in the program
 struct Page pageTable[PAGE_TABLE_SIZE];
 struct Frame physicalMemory[TOTAL_FRAMES];
 char virtualAddress[VIRTUAL_ADDRESS_SIZE];
@@ -48,9 +48,10 @@ FILE *backingStore;
 FILE *output;
 int numberOfPageFaults = 0;
 int translatedAddresses = 0;
+
 int tlbInsertions = 0;
-int tlbIndex = 0;
-signed char value;
+//int tlbIndex = 0;
+
 
 
 /* creating a user defined data type to add more meaningful return values to functions */
@@ -67,6 +68,9 @@ enum tlb_lookup_status {
 } tlb_lookup_status;
 
 
+/* This function will see if the pageTable has a valid entry for the requiested page number. If it does, it will return either PAGE_HIT and 
+*  will set *p to the address of the pageTable entry with the valid pageNumber.  
+*/
 page_lookup_status
 page_lookup(struct Page **p, uint32_t pageNumber){
     //point p to null if there is a page fault
@@ -82,6 +86,10 @@ page_lookup(struct Page **p, uint32_t pageNumber){
     return PAGE_FAULT;
 }
 
+/* This function will search the TLB for the requested tlb entry by comparing the pageNumber argument with all entries in the TLB. if there
+*  is a match, the pointer to frameNumber will be set to the frameNumber matching the pageNumber in the tlb entry, and the function will
+*  return TLB_HIT
+*/
 tlb_lookup_status
 tlb_lookup(uint32_t pageNumber, uint32_t* frameNumber){
     for (i = 0; i < TLB_SIZE; i++) {
@@ -141,8 +149,14 @@ int main(int argc, char const *argv[]){
     backingStore = fopen("BACKING_STORE.bin", "rb"); //opens the backing_store.bin file
     output = fopen("output.txt", "w"); //output has write identifier
     int logicalAddress;
-    uint32_t frameNumber = 0;
-    
+    uint32_t frameNumber = 0; //initializing frame number
+    signed char value; //to hold the signed byte value from memory
+
+    int tlbHits = 0;
+    int pageFaults = 0;
+    float pageFaultRate = 0;
+    float tlbHitRate = 0;
+
     //initializing the page table so that valid field of every element is false
     for(i = 0; i < PAGE_TABLE_SIZE; i++){
         pageTable[i].valid = 0;
@@ -166,18 +180,20 @@ int main(int argc, char const *argv[]){
     while(fgets(virtualAddress, VIRTUAL_ADDRESS_SIZE, addresses) != NULL){
         logicalAddress = atoi(virtualAddress); //set each line of logical address to type int
         
+        //as the pageNumber and offset are unsigned 32 bit numbers, using uint32_t data type
         uint32_t pageNumber = GET_PAGE_NUMBER(logicalAddress); //translating page number from logical address
         uint32_t offset = GET_OFFSET(logicalAddress); //translating offset from logical address
 
         struct Page *lookup_results; //a placeholder variable to get the frame number in case of a PAGE_HIT
         
         if(TLB_HIT == tlb_lookup(pageNumber, &frameNumber)){ //if the page number is in the TLB, get its frame number
-            //now that the frame number has been retrieved, 
+            tlbHits++; //increment the number of TLB hits
+            //nothing more to do here because frameNumber already retrieved the frameNumber value from the tlb_lookup function
         }
         else{ //if the TLB search fails, do a page table lookup
             if(PAGE_HIT == page_lookup(&lookup_results, pageNumber)){ //if the page is in the page table, get its frame number
                 frameNumber = lookup_results->frameNumber;
-                insert_into_tlb(pageNumber, frameNumber);
+                insert_into_tlb(pageNumber, frameNumber); 
             }
             else{ //if its not in the page table, look for available frame number
                 for (i = 0; i < TOTAL_FRAMES; i++) {
@@ -205,19 +221,25 @@ int main(int argc, char const *argv[]){
                 pageTable[pageNumber].pageNumber = pageNumber; 
                 pageTable[pageNumber].frameNumber = frameNumber;
                 pageTable[pageNumber].valid = 1;
-                insert_into_tlb(pageNumber, frameNumber);
+                pageFaults++;
+                insert_into_tlb(pageNumber, frameNumber); //insert the page into the tlb
                 
-                //insert the page into the tlb
+                
             }
         }
         
         uint32_t physical_address = GET_PHYSICAL_ADDRESS(frameNumber, offset);
         value = physicalMemory[frameNumber].bytes[offset]; //gets the signed byte value stored at the physical address
-        //printf("virtual address: %u physical address: %u value: %d\n", logicalAddress, physical_address, value);
-        
+        /* outputs the virtual address, physical address, and signed byte value to the output.txt file */
         fprintf(output, "Virtual address: %u Physical address: %u Value: %d\n", logicalAddress, physical_address, value);
+        translatedAddresses++;
     }
-    
+    pageFaultRate = pageFaults*1.0f / translatedAddresses;
+    tlbHitRate = tlbHits*1.0f / translatedAddresses;
+    /* Outputs the number of page faults, tlb hits, page fault rate, and tlb hit rate to output.txt */
+    fprintf(output, "Page Faults: %d TLB Hits: %d Page Fault Rate: %f TLB Hit Rate: %f\n", pageFaults, tlbHits, pageFaultRate, tlbHitRate);
+
+    /* Close the file streams used for this program */
     fclose(addresses);
     fclose(backingStore);
     fclose(output);
