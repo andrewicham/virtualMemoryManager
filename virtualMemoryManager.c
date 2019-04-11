@@ -177,6 +177,7 @@ int main(int argc, char const *argv[]){
         uint32_t physical_address = GET_PHYSICAL_ADDRESS(frameNumber, offset);
         value = physicalMemory[frameNumber].bytes[offset]; //gets the signed byte value stored at the physical address
         //printf("virtual address: %u physical address: %u value: %d\n", logicalAddress, physical_address, value);
+        
         fprintf(output, "Virtual address: %u Physical address: %u Value: %d\n", logicalAddress, physical_address, value);
     }
     
