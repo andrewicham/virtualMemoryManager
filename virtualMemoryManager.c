@@ -108,12 +108,12 @@ void insert_into_tlb(pageNumber, frameNumber){
 	    break;
 	}
     }
-    if(i != tlbInsertions){
-	for(i = i; i < tlbInsertions - 1; i++){
+    if(tlbInsertions != i){ //num insertions not equal to index
+	for(i = i; i < (tlbInsertions - 1); i++){ //shift up in array
 	    tlb.pages[i].pageNumber = tlb.pages[i+1].pageNumber;
 	    tlb.pages[i].frameNumber = tlb.pages[i+1].frameNumber;
 	}
-	if(tlbInsertions < TLB_SIZE){  //if tlb still has room
+	if(tlbInsertions < TLB_SIZE){  //if tlb not full
 	    tlb.pages[tlbInsertions].pageNumber = pageNumber; //insert page
 	    tlb.pages[tlbInsertions].frameNumber = frameNumber; //insert frame
 	}
@@ -126,12 +126,12 @@ void insert_into_tlb(pageNumber, frameNumber){
         }
     }
     else{
-	if(tlbInsertions < TLB_SIZE){
-	    tlb.pages[tlbInsertions].pageNumber = pageNumber;
-	    tlb.pages[tlbInsertions].frameNumber = frameNumber;
+	if(tlbInsertions < TLB_SIZE){ //TLB not full
+	    tlb.pages[tlbInsertions].pageNumber = pageNumber; //insert page
+	    tlb.pages[tlbInsertions].frameNumber = frameNumber; //insert frame
 	}
 	else{
-	    for(i = 0; i < TLB_SIZE - 1; i++){
+	    for(i = 0; i < (TLB_SIZE - 1); i++){ //shift up in array
 		tlb.pages[i].pageNumber = tlb.pages[i+1].pageNumber;
 		tlb.pages[i].frameNumber = tlb.pages[i+1].frameNumber;
 	    }
